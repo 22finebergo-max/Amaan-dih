@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Amaan Clicker</title>
+<meta name="description" content="Click Amaan. Earn amaans. Rebirth, graduate, transcend. Repeat forever.">
+<meta name="theme-color" content="#14203f">
+<link rel="icon" href="amaan.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bowlby+One&family=DM+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z7M1NNWR8L"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-Z7M1NNWR8L');
+</script>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.1 6.7.8-4.9 4.6 1.3 6.6L12 17.3 6 20.6l1.3-6.6L2.4 9.4l6.7-.8z"/></symbol>
+  <symbol id="i-diploma" viewBox="0 0 24 24"><path d="M4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-5l-1 3-1-3H6a2 2 0 0 1-2-2zm3 3h10v1.5H7zm0 3h7v1.5H7z"/></symbol>
+  <symbol id="i-halo" viewBox="0 0 24 24"><path d="M12 4c5 0 9 1.8 9 4s-4 4-9 4-9-1.8-9-4 4-4 9-4zm0 2c-3.9 0-7 1-7 2s3.1 2 7 2 7-1 7-2-3.1-2-7-2zm0 7c3.5 0 6.4-.8 7.9-2.1V15c0 2.2-3.5 4-7.9 4s-7.9-1.8-7.9-4v-4.1C5.6 12.2 8.5 13 12 13z"/></symbol>
+  <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><path d="M7 10V7a5 5 0 0 1 10 0v3h1a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2zm2 0h6V7a3 3 0 0 0-6 0z"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5l-1.5-1.5L9 14.5 5.5 11z"/></symbol>
+  <symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 2c1 4 5 5.5 5 11a5 5 0 0 1-10 0c0-2 .8-3.3 1.6-4.3.3 1.6 1 2.3 1.9 2.3.6-3 .5-5.5 1.5-9z"/></symbol>
+</svg>
+
+<div class="wrap">
+
+  <aside class="stage" id="stage" aria-label="Click area">
+    <div class="stage-top">
+      <h1>Amaan Clicker</h1><span class="edition">EXTRA CREDIT EDITION</span><span class="rank-badge" id="rankBadge"></span>
+      <div class="prestige-pills" id="pills" aria-label="Prestige currencies"></div>
+    </div>
+
+    <div class="count" id="bal">0</div>
+    <div class="sub">amaans</div>
+    <div class="rates">
+      <span id="cps" title="Amaans produced per second">0 / sec</span>
+      <span id="cpc" title="Amaans per click">+1 / click</span>
+    </div>
+
+    <div class="pic" id="pic">
+      <button id="hit" aria-label="Click Amaan to earn amaans">
+        <img alt="Amaan sticking his tongue out" src="amaan.jpg" width="360" height="691" draggable="false">
+      </button>
+      <div class="fever-ring" id="feverRing" aria-hidden="true"></div>
+    </div>
+
+    <div class="heat" title="Click fast to build combo. Hit 100% for FEVER.">
+      <svg class="ico" aria-hidden="true"><use href="#i-flame"/></svg>
+      <div class="heat-bar"><i id="heatFill"></i></div>
+      <span id="heatTxt">Combo ×1.00</span>
+    </div>
+
+    <div class="buffs" id="buffs" aria-live="off"></div>
+
+    <div class="ticker" aria-label="Amaan news">
+      <span class="ticker-tag">NEWS</span>
+      <span class="ticker-text" id="news">Amaan sticks tongue out. Economy reacts.</span>
+    </div>
+
+    <div id="goldZone" class="gold-zone" aria-live="polite"></div>
+  </aside>
+
+  <main class="side">
+    <nav class="tabs" id="tabs" role="tablist" aria-label="Game sections">
+      <button class="tab on" data-tab="shop" role="tab" aria-selected="true">Shop</button>
+      <button class="tab" data-tab="upg" role="tab">Upgrades<i class="dot" id="dotUpg" hidden></i></button>
+      <button class="tab" data-tab="rebirth" role="tab">Rebirth<i class="dot" id="dotReb" hidden></i></button>
+      <button class="tab" data-tab="prestige" role="tab">Prestige<i class="dot" id="dotPre" hidden></i></button>
+      <button class="tab" data-tab="chal" role="tab">Challenges</button>
+      <button class="tab" data-tab="activities" role="tab">Extra credit <i class="new-tag">NEW</i></button>
+      <button class="tab" data-tab="minions" role="tab">Hire Amaans <i class="new-tag">BIG</i></button>
+      <button class="tab" data-tab="pets" role="tab">Pets <i class="new-tag">NEW</i></button>
+      <button class="tab" data-tab="essence" role="tab">Essence Lab <i class="new-tag">NEW</i></button>
+      <button class="tab" data-tab="style" role="tab">Wardrobe &amp; Story</button>
+      <button class="tab" data-tab="ach" role="tab">Trophies</button>
+      <button class="tab" data-tab="stats" role="tab">Stats</button>
+      <button class="tab" data-tab="set" role="tab">Settings</button>
+    </nav>
+
+    <!-- SHOP -->
+    <section class="panel on" id="p-shop" role="tabpanel">
+      <div class="panel-head">
+        <h2>Click power</h2>
+      </div>
+      <div class="list" id="L1"></div>
+
+      <div class="panel-head">
+        <h2>Buildings</h2>
+        <div class="seg" id="buyAmt" role="group" aria-label="Buy amount">
+          <button data-n="1" class="on">×1</button>
+          <button data-n="10">×10</button>
+          <button data-n="100">×100</button>
+          <button data-n="max">Max</button>
+        </div>
+      </div>
+      <button class="btn best-buy" id="bestBuy" title="Buy one affordable building with the highest base production per amaan">⚡ Buy best value · ×1</button><div class="list" id="L2"></div>
+    </section>
+
+    <!-- UPGRADES -->
+    <section class="panel" id="p-upg" role="tabpanel">
+      <div class="panel-head">
+        <h2>Available upgrades</h2>
+        <span class="hint" id="upgCount"></span>
+      </div>
+      <div class="ugrid" id="L3"></div>
+      <div class="empty" id="upgEmpty" hidden>
+        <b>Nothing to buy right now.</b>
+        <span>Own more buildings or earn more amaans to reveal new upgrades. Each building unlocks a tier upgrade at 1, 5, 25, 50, 100, 150, 200, 250 and 300 owned.</span>
+      </div>
+      <details class="bought">
+        <summary>Purchased upgrades (<span id="boughtN">0</span>)</summary>
+        <div class="ugrid small" id="L3b"></div>
+      </details>
+    </section>
+
+    <!-- REBIRTH -->
+    <section class="panel" id="p-rebirth" role="tabpanel">
+      <div class="prestige-card stars">
+        <div class="pc-ico"><svg class="ico big" aria-hidden="true"><use href="#i-star"/></svg></div>
+        <div class="pc-body">
+          <h2>Rebirth</h2>
+          <p>Start the school year over. You lose amaans, buildings and upgrades, but you keep your <b>Gold Stars</b>, your trophies and everything in the Sticker Book. Each Gold Star permanently boosts production by <b id="starRate">+10%</b>.</p>
+          <div class="pc-stats">
+            <div><small>Gold Stars</small><b id="starsUnspent">0</b></div>
+            <div><small>Earned this cycle</small><b id="starsTot">0</b></div>
+            <div><small>Production bonus</small><b id="starBonus">×1.00</b></div>
+            <div><small>Next star at</small><b id="nextStar">1.00 M</b></div>
+          </div>
+          <button class="big-btn" id="rebirthBtn" disabled>Rebirth for <b>+0</b> Gold Stars</button>
+          <p class="hint">Gold Stars earned = √(amaans earned this cycle ÷ 1,000,000), times your star multipliers. Earning is cumulative, so rebirthing early or late gives the same total.</p>
+        </div>
+      </div>
+
+      <div class="panel-head"><h2>Sticker Book</h2><span class="hint">Spend Gold Stars. Spending does not reduce your production bonus.</span></div>
+      <div class="ugrid" id="L4"></div>
+    </section>
+
+    <!-- PRESTIGE -->
+    <section class="panel" id="p-prestige" role="tabpanel">
+      <div class="prestige-card diplomas" id="gradCard">
+        <div class="pc-ico"><svg class="ico big" aria-hidden="true"><use href="#i-diploma"/></svg></div>
+        <div class="pc-body">
+          <h2>Graduation</h2>
+          <p>Leave the school entirely. Resets everything a Rebirth resets <b>plus</b> your Gold Stars and Sticker Book. In exchange you earn <b>Diplomas</b>: each one gives <b>+50% production</b> and <b>+50% Gold Stars</b> forever.</p>
+          <div class="pc-stats">
+            <div><small>Diplomas</small><b id="dipUnspent">0</b></div>
+            <div><small>Earned this cycle</small><b id="dipTot">0</b></div>
+            <div><small>Stars since graduation</small><b id="starsEver">0</b></div>
+            <div><small>Next diploma at</small><b id="nextDip">300 stars</b></div>
+          </div>
+          <div class="locked" id="gradLock"><svg class="ico" aria-hidden="true"><use href="#i-lock"/></svg> Buy <b>Hall Pass</b> in the Sticker Book to unlock Graduation.</div>
+          <button class="big-btn" id="gradBtn" disabled hidden>Graduate for <b>+0</b> Diplomas</button>
+          <p class="hint">Diplomas = √(Gold Stars earned since last Graduation ÷ 300), times your diploma multipliers.</p>
+        </div>
+      </div>
+
+      <div class="panel-head"><h2>Trophy Cabinet</h2><span class="hint">Spend Diplomas on powerful permanent perks.</span></div>
+      <div class="ugrid" id="L5"></div>
+
+      <div class="prestige-card halos" id="transCard">
+        <div class="pc-ico"><svg class="ico big" aria-hidden="true"><use href="#i-halo"/></svg></div>
+        <div class="pc-body">
+          <h2>Transcendence</h2>
+          <p>Amaan becomes a legend. Resets <b>everything</b>, including Diplomas and the Trophy Cabinet. Each <b>Halo</b> adds <b>+100% production</b>, <b>+20% Gold Stars</b> and <b>+10% Diplomas</b> to its base bonus. The base Halo bonus remains linear. Combined prestige bonuses have diminishing returns, and later Halos cost more.</p>
+          <div class="pc-stats">
+            <div><small>Halos</small><b id="haloN">0</b></div>
+            <div><small>Diplomas ever earned</small><b id="dipAll">0</b></div>
+            <div><small>Next halo at</small><b id="nextHalo">25 diplomas</b></div>
+            <div><small>Transcendences</small><b id="transN">0</b></div>
+          </div>
+          <div class="locked" id="transLock"><svg class="ico" aria-hidden="true"><use href="#i-lock"/></svg> Buy <b>Legacy Tie</b> in the Trophy Cabinet to unlock Transcendence.</div>
+          <button class="big-btn" id="transBtn" disabled hidden>Transcend for <b>+0</b> Halos</button>
+        </div>
+      </div>
+      <div class="activity-card"><b>Balanced Halo scaling</b><p class="hint">H Halos give production ×(1 + H), stars ×(1 + 0.2H), diplomas ×(1 + 0.1H) before softcaps.<br>Halo thresholds: 25, 100, 225, 400… cumulative diplomas (25 × H²). Existing saves keep earned Halos and use an adjusted threshold.</p></div><div class="panel-head"><h2>Halo milestones</h2></div>
+      <div class="milestones" id="L6"></div>
+    </section>
+
+    <!-- CHALLENGES -->
+    <section class="panel" id="p-chal" role="tabpanel">
+      <div class="panel-head"><h2>Challenges</h2><span class="hint">Each challenge starts a Rebirth under a special rule. Reach the goal to earn a permanent reward. Can be completed 5 times, with bigger goals each time.</span></div>
+      <div class="locked" id="chalLock"><svg class="ico" aria-hidden="true"><use href="#i-lock"/></svg> Buy <b>Teacher's Lounge</b> in the Sticker Book to unlock Challenges.</div>
+      <div class="active-chal" id="chalActive" hidden></div>
+      <div class="list" id="L7"></div>
+    </section>
+
+    <section class="panel" id="p-activities" role="tabpanel">
+      <div class="panel-head"><h2>Extra credit</h2><span class="new-tag">NEW</span></div>
+      <p class="hint">A little more Amaan. Your original progression, with something extra to work towards.</p>
+      <div class="activity-card streak-card"><b>🎁 Daily login streak</b><p class="hint">Claim once per day. Rewards grow until day 7. Miss a day and the streak restarts. Day 3 unlocks Gold Frame; day 7 unlocks Prism.</p>
+      <div class="streak-dots" id="streakDots"></div><div class="sprint-stats"><div><strong id="streakNow">0</strong><small>Current streak</small></div><div><strong id="streakBest">0</strong><small>Best streak</small></div></div><button class="big-btn" id="claimDaily">Claim</button></div>
+      <div class="panel-head"><h2>Daily homework</h2></div>
+      <p class="hint">Resets at midnight UTC. Fixed amaan rewards, once per quest per day. Reward claims are paused during prestige challenges.</p>
+      <div id="dailyList"></div>
+      <div class="panel-head"><h2>30-second click sprint</h2></div>
+      <div class="activity-card"><b>Beat your personal best.</b><p class="hint">Start the timer, then click Amaan or press Space away from a focused button. Normal click earnings continue; the sprint is just for bragging rights.</p>
+      <div class="sprint-stats"><div><strong id="sprintTime">30s</strong><small>Remaining</small></div><div><strong id="sprintCount">0</strong><small>Clicks</small></div><div><strong id="sprintBest">0</strong><small>Personal best</small></div></div>
+      <button class="big-btn" id="startSprint">Start sprint</button></div>
+      <div class="panel-head"><h2>Milestone quests</h2></div><p class="hint">One-time goals across your whole save, with amaans, Gold Stars and cosmetics as rewards.</p><div id="mqList"></div>
+      <div class="panel-head"><h2>Memory mini-game</h2></div>
+      <div class="activity-card"><b>🧠 Blazer Badge Memory</b><p class="hint">Watch the pads flash, then repeat the pattern. Each round adds one flash. Reach 5 for a daily production prize; 8 is a perfect run.</p><div class="mem-pads" id="memPads"></div><p class="mem-msg" id="memMsg">Press start when ready.</p><div class="sprint-stats"><div><strong id="memBest">0</strong><small>Best</small></div><div><strong id="memDaily">Available</strong><small>Daily prize</small></div></div><button class="big-btn" id="memStart">Start memory game</button></div>
+    </section>
+    <section class="panel" id="p-style" role="tabpanel">
+      <div class="panel-head"><h2>Prestige rank</h2></div><div class="activity-card"><strong class="rank-big" id="rankBig"></strong><p class="hint">Your rank is cosmetic and follows your best prestige achievement.</p><div class="rank-ladder" id="rankLadder"></div></div>
+      <div class="panel-head"><h2>Amaan looks</h2><span class="hint">Locked looks show how to earn them.</span></div><div class="cos-grid" id="skinList"></div>
+      <div class="panel-head"><h2>Stage backgrounds</h2></div><div class="cos-grid" id="bgList"></div>
+      <div class="panel-head"><h2>The Legend of Amaan</h2></div><p class="hint">Story chapters unlock from all-time amaans. Some secrets are found elsewhere.</p><div class="lore-list" id="loreList"></div>
+    </section>
+    <section class="panel" id="p-minions" role="tabpanel">
+      <div class="panel-head"><h2>Hire Amaans</h2><span class="new-tag">BIG FEATURE</span></div>
+      <div class="activity-card" id="minionLocked"><b>👥 Build a team of different Amaans</b><p class="hint">Complete your first Rebirth to open Hire Amaans. Every hired Amaan, Hire Token and agency upgrade survives all prestige resets.</p><button class="big-btn" id="foundMinions" disabled>Rebirth once to unlock</button></div>
+      <div id="minionOpen" hidden>
+        <div class="minion-hero"><div><span class="crew-mark">◆</span><div><small>Hire Tokens</small><strong id="minionTokens">0</strong></div></div><div><small>All-time tokens</small><b id="minionEarned">0</b></div><div><small>Work shifts</small><b id="minionCycles">0</b></div><div><small>Agency rank</small><b id="minionRank">◇ Trainee</b></div></div>
+        <div class="diversity-note"><b>Appearance and heritage are cosmetic.</b><span>Power, Speed and Efficiency come only from job and level, so no race or heritage receives better stats.</span></div>
+
+        <div class="panel-head"><h2>Automatic Amaan shift</h2><span class="hint">Your active team works continuously—there is no dungeon or adventure mode.</span></div>
+        <div class="shift-card"><div><small>NEXT PAYDAY</small><strong id="shiftStatus">Assign 3 Amaans</strong></div><div class="shift-rewards"><span><b id="shiftYield">—</b><small>Hire Tokens</small></span><span><b id="shiftXp">—</b><small>XP each</small></span></div><div class="shift-bar"><i id="shiftBar"></i></div><p class="hint">A base shift lasts 10 minutes. Speed shortens it and Efficiency improves rewards. Amaans work offline for up to 8 hours.</p></div>
+
+        <div class="panel-head"><h2>Active Amaan team</h2><span class="hint">Choose 3. Job synergies boost matching buildings.</span></div><div class="team-slots" id="teamSlots"></div><div class="team-totals"><span>⚔ Power <b id="teamPower">0</b></span><span>⚡ Speed <b id="teamSpeed">0</b></span><span>◆ Efficiency <b id="teamEff">0</b></span><span>📈 Team production <b id="teamProd">+0%</b></span></div>
+
+        <div class="panel-head"><h2>Hire Amaans Completion</h2><span class="hint">The long-term goal</span></div><div class="mastery-card"><div><b>Hire all 8 Amaan types</b><strong id="typeProgress">0 / 8</strong></div><div><b>Collect all 6 jobs</b><strong id="jobProgress">0 / 6</strong></div><div><b>Train 3 Amaans to level 30</b><strong id="veteranProgress">0 / 3</strong></div><div class="mastery-bar"><i id="masteryBar"></i></div><div class="amaan-type-list" id="amaanTypeList"></div><p class="hint">Completion awards the permanent Head Hirer title and <b>+25% global production</b>.</p><div class="mastery-done" id="masteryDone" hidden>👑 HIRE AMAANS COMPLETE</div></div>
+
+        <div class="panel-head"><h2>Your hired Amaans</h2><span class="hint"><b id="minionRosterCount">0 / 10</b> hired</span></div><p class="hint">XP automatically raises levels to 30. Manual Training buys one level immediately. Optional Auto Training buys one affordable level after each shift.</p><div class="minion-grid" id="minionRoster"></div>
+
+        <div class="panel-head"><h2>Hire a new Amaan</h2><span class="hint">Next hire: <b id="minionRecruitCost">10</b> ◆ · Capacity <b id="minionCapacity">10</b></span></div>
+        <div class="hire-builder"><label><span>Amaan type / heritage</span><select id="hireHeritage"></select></label><label><span>Job</span><select id="hireJob"></select></label><div class="hire-preview" id="hirePreview"></div><button class="big-btn" id="hireAmaanBtn">Hire this Amaan</button></div>
+
+        <div class="panel-head"><h2>Hire Amaans upgrades</h2><span class="hint">Permanent and capped. Production bonuses pause during Challenges.</span></div><div class="ugrid" id="minionPerks"></div>
+        <details class="minion-help"><summary>How Hire Amaans works</summary><ul><li>Choose any of 8 diverse Amaan appearances and any of 6 jobs—48 possible combinations.</li><li>Heritage changes only the portrait. Job and level determine every stat and bonus.</li><li>Power strengthens job-building synergy; Speed shortens shifts; Efficiency improves XP and Hire Token pay.</li><li>Levels 10 and 20 unlock silver and gold uniforms.</li><li>Job-building synergies are now capped at +100%; active-team Power also provides up to +150% global production. Agency Banner gives +5% and Click Coach gives +8% per level.</li><li>Hired Amaans work offline for up to 8 hours and survive every prestige reset.</li></ul></details>
+        <div class="panel-head"><h2>Hiring log</h2></div><ol class="minion-log" id="minionLog"></ol>
+      </div>
+    </section>
+
+    <section class="panel" id="p-pets" role="tabpanel">
+      <div class="panel-head"><h2>Pet Amaans</h2><span class="new-tag">NEW</span></div>
+      <div class="activity-card pet-lock-card" id="petLocked"><b>🥚 The Amaan Egg is dormant</b><p>Earn <b>3 Halos</b> to unlock eggs and your first pet slot.</p><div class="pet-lock-progress"><span>Current Halos: <b id="petHaloNow">0</b></span><span>Still needed: <b id="petHaloNeed">3</b></span></div><p class="hint">Pet XP unlocks later at 5 Halos. Everything in this system survives Transcendence.</p></div>
+      <div id="petOpen" hidden>
+        <div class="pet-hero"><div><span>🥚</span><div><small>Egg Sanctuary</small><strong id="petHatches">0</strong><small>eggs opened</small></div></div><div><small>Hire Tokens</small><b id="petHireTokens">0</b></div><div><small>Collection</small><b id="petFound">0 / 5</b></div><div><small>Equipped slots</small><b id="petSlotCount">0 / 1</b></div></div>
+        <div class="locked" id="petXpLock">🔒 Reach <b>5 Halos</b> to earn Pet XP from Hire Amaans shifts, every 100 manual clicks and feeding. Pets still provide their level-1 boost before then.</div>
+
+        <div class="egg-card"><div class="big-egg">🥚</div><div><h2>Open an Amaan Egg</h2><p>Costs <b>25 Hire Tokens</b>. Duplicates are stored for Breed/Fuse upgrades.</p><div class="egg-odds"><span class="o-common">Tiny Amaan · 50%</span><span class="o-uncommon">Tongue Amaan · 30%</span><span class="o-rare">Worker Amaan · 15%</span><span class="o-legend">Halo Amaan · 4.9%</span><span class="o-mythic">Amaan Dih · 0.1%</span></div></div><button class="big-btn" id="hatchPetBtn">Open egg · 25 ◆</button></div>
+
+        <div class="panel-head"><h2>Equipped pets</h2><span class="hint">1 slot at 3 Halos · 2 at 5 · 3 at 10</span></div><div class="pet-slots" id="petActiveSlots"></div>
+        <div class="panel-head"><h2>Pet collection</h2><span class="hint">Boosts increase every level and at evolutions 10, 25 and 50.</span></div><div class="pet-grid" id="petCollection"></div>
+
+        <details class="pet-help"><summary>How Pet Amaans work</summary><ul><li>Egg odds are exactly 50%, 30%, 15%, 4.9% and 0.1% per hatch.</li><li>Amaan Dih is the Mythic 0.1% pet.</li><li>At 5 Halos, equipped pets earn XP from completed Hire Amaans shifts and every 100 manual clicks.</li><li>Feed a pet with amaans for 50 XP. Feed cost scales with its level and your production.</li><li>Two duplicate copies can be Breed/Fused into a Bond Star, making that pet's boost 15% stronger. Maximum 5 stars.</li><li>Each pet has a cooldown ability. It must be equipped to activate it.</li><li>Pets, levels, duplicates, Bond Stars, cooldowns and equipped slots all survive Transcendence.</li></ul></details>
+      </div>
+    </section>
+
+    <section class="panel" id="p-essence" role="tabpanel"><div class="panel-head"><h2>Essence Lab</h2><span class="new-tag">NEW</span></div>
+      <div class="activity-card"><b>◆ A slower kind of power</b><p class="hint">After your first Halo, earn 1 Essence per 5 minutes of active play. Click at least once each minute to keep the meter running. No offline Essence, no earnings during challenges, maximum 20 per local calendar day. Partial progress carries over.</p><div class="sprint-stats"><div><strong id="essBalance">0</strong><small>Available</small></div><div><strong id="essEarned">0</strong><small>All-time</small></div><div><strong id="essDaily">0 / 20</strong><small>Earned today</small></div></div><progress id="essProgress" max="300" value="0" style="width:100%;accent-color:var(--purple)"></progress><p class="hint">Essence and all Lab upgrades survive Rebirth, Graduation and Transcendence. Upgrade costs double with each level, and every upgrade has a maximum level.</p></div>
+      <div class="locked" id="essLock">🔒 Earn your first Halo to unlock the Lab.</div><div class="ugrid" id="essList"></div>
+      <div class="activity-card"><b>Balance update</b><p class="hint">Gold Star production softcaps at ×100; Diploma production at ×25. Above each threshold, further growth uses a 0.35 power. Combined global bonuses softcap at ×1,000. Gold Star earning multipliers softcap at ×10 and Diploma earning at ×5. Output above 1e30 per click or second also has diminishing returns. Click Frenzy is ×25, and the 8/13-Halo milestone boosts are +25% each. Currency totals are capped at 1e100 to prevent numeric overflow. Your earned currencies are retained unless above that safety ceiling.</p></div>
+    </section>
+    <!-- ACHIEVEMENTS -->
+    <section class="panel" id="p-ach" role="tabpanel">
+      <div class="panel-head"><h2>Trophies</h2><span class="hint" id="achCount"></span></div>
+      <p class="hint">Every trophy adds <b>+1%</b> to the base trophy multiplier, before combined softcaps. Hover or tap one to see how to earn it.</p>
+      <div id="L8"></div>
+    </section>
+
+    <!-- STATS -->
+    <section class="panel" id="p-stats" role="tabpanel">
+      <div class="panel-head"><h2>Statistics</h2></div>
+      <div class="statgrid" id="L9"></div>
+    </section>
+
+    <!-- SETTINGS -->
+    <section class="panel" id="p-set" role="tabpanel">
+      <div class="panel-head"><h2>Settings</h2></div>
+      <div class="settings">
+        <label class="row"><span>Theme</span>
+          <select id="setTheme"><option value="auto">System</option><option value="light">Light</option><option value="dark">Dark</option></select>
+        </label>
+        <label class="row"><span>Sound effects</span><input type="checkbox" id="setSound" checked></label>
+        <label class="row"><span>Click particles</span><input type="checkbox" id="setFx" checked></label>
+        <label class="row"><span>Number format</span>
+          <select id="setNum"><option value="short">Short (1.23 M)</option><option value="sci">Scientific (1.23e6)</option></select>
+        </label>
+        <label class="row" id="rowAuto" hidden><span>Autopilot (auto-buy buildings)</span><input type="checkbox" id="setAuto" checked></label>
+        <label class="row" id="rowAutoU" hidden><span>Auto-Upgrades</span><input type="checkbox" id="setAutoU" checked></label>
+      </div>
+      <div class="panel-head"><h2>Save</h2></div>
+      <p class="hint">Your game saves automatically every few seconds in this browser. Export a save code to move it to another device.</p>
+      <div class="btnrow">
+        <button class="btn" id="btnSave">Save now</button>
+        <button class="btn" id="btnExport">Export save</button>
+        <button class="btn" id="btnImport">Import save</button>
+        <button class="btn danger" id="btnWipe">Wipe everything</button>
+      </div>
+      <textarea id="saveBox" rows="4" placeholder="Save code appears here, or paste one and press Import." spellcheck="false"></textarea>
+      <p class="hint" id="saveMsg"></p>
+    </section>
+  </main>
+</div>
+
+<div class="toasts" id="toasts" aria-live="polite"></div>
+
+<div class="modal" id="modal" hidden>
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+    <h2 id="mTitle">Title</h2>
+    <div class="modal-body" id="mBody"></div>
+    <div class="btnrow" id="mBtns"></div>
+  </div>
+</div>
+
+<script src="js/game.js"></script>
+</body>
+</html>

@@ -19,13 +19,131 @@
   gtag('js', new Date());
   gtag('config', 'G-Z7M1NNWR8L');
 </script>
+<style>
+  .mini-game-card {
+    background: rgba(15, 23, 45, 0.9);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px;
+    padding: 14px;
+    margin: 14px 0;
+    display: grid;
+    gap: 12px;
+  }
+
+  .mini-game-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .mini-game-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    color: #b9c3df;
+    font-size: 13px;
+  }
+
+  .mini-game-stats strong {
+    color: #f5d27a;
+  }
+
+  .mini-game-box {
+    position: relative;
+    width: 100%;
+    height: 180px;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    background: rgba(9, 12, 19, 0.8);
+    overflow: hidden;
+  }
+
+  .mini-game-target {
+    position: absolute;
+    width: 52px;
+    height: 52px;
+    display: grid;
+    place-items: center;
+    font-size: 38px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    cursor: pointer;
+    user-select: none;
+    transition: transform 0.08s ease;
+  }
+
+  .mini-game-target:active {
+    transform: scale(0.9);
+  }
+
+  .mini-game-racer {
+    position: absolute;
+    left: 18px;
+    bottom: 22px;
+    font-size: 36px;
+    transition: left 0.12s linear;
+  }
+
+  .mini-game-racer.red {
+    bottom: 72px;
+  }
+
+  .mini-game-choices {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .mini-game-dodge-player {
+    position: absolute;
+    bottom: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 52px;
+    height: 52px;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.08);
+    font-size: 30px;
+    transition: left 0.08s linear;
+  }
+
+  .mini-game-dodge-obstacle {
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    border-radius: 8px;
+    background: #ff7ac8;
+    top: 0;
+    left: 0;
+    display: grid;
+    place-items: center;
+    font-size: 18px;
+  }
+
+  .mini-game-msg {
+    font-size: 13px;
+    min-height: 18px;
+    color: #b9c3df;
+  }
+
+  @media (max-width: 640px) {
+    .mini-game-row {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+</style>
 </head>
 <body>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.1 6.7.8-4.9 4.6 1.3 6.6L12 17.3 6 20.6l1.3-6.6L2.4 9.4l6.7-.8z"/></symbol>
   <symbol id="i-diploma" viewBox="0 0 24 24"><path d="M4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-5l-1 3-1-3H6a2 2 0 0 1-2-2zm3 3h10v1.5H7zm0 3h7v1.5H7z"/></symbol>
-  <symbol id="i-halo" viewBox="0 0 24 24"><path d="M12 4c5 0 9 1.8 9 4s-4 4-9 4-9-1.8-9-4 4-4 9-4zm0 2c-3.9 0-7 1-7 2s3.1 2 7 2 7-1 7-2-3.1-2-7-2zm0 7c3.5 0 6.4-.8 7.9-2.1V15c0 2.2-3.5 4-7.9 4s-7.9-1.8-7.9-4v-4.1C5.6 12.2 8.5 13 12 13z"/></symbol>
+  <symbol id="i-halo" viewBox="0 0 24 24"><path d="M12 4c5 0 9 1.8 9 4s-4 4-9 4-9-1.8-9-4 4-4 9-4zm0 2c-3.9 0-7 1-7 2s3.1 2 7 2 7-1 7-2-3.1-2-7-2zm0 7c3.5 0 6.4-.8 7.9-2.1V15c0 2.2-3.5 4-7.9 4s-7.9-1.8-7.9-4v-2.1C5.6 14.2 8.5 15 12 15zm0 2.5c-2.9 0-5.3-.6-6.8-1.7v2.1c0 1.9 3.1 3.4 6.8 3.4s6.8-1.5 6.8-3.4v-2.1c-1.5 1.1-3.9 1.7-6.8 1.7z"/></symbol>
   <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></symbol>
   <symbol id="i-lock" viewBox="0 0 24 24"><path d="M7 10V7a5 5 0 0 1 10 0v3h1a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2zm2 0h6V7a3 3 0 0 0-6 0z"/></symbol>
   <symbol id="i-check" viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5l-1.5-1.5L9 14.5 5.5 11z"/></symbol>
@@ -87,15 +205,10 @@
       <button class="tab" data-tab="set" role="tab">Settings</button>
     </nav>
 
-    <!-- SHOP -->
     <section class="panel on" id="p-shop" role="tabpanel">
-      <div class="panel-head">
-        <h2>Click power</h2>
-      </div>
+      <div class="panel-head"><h2>Click power</h2></div>
       <div class="list" id="L1"></div>
-
-      <div class="panel-head">
-        <h2>Buildings</h2>
+      <div class="panel-head"><h2>Buildings</h2>
         <div class="seg" id="buyAmt" role="group" aria-label="Buy amount">
           <button data-n="1" class="on">×1</button>
           <button data-n="10">×10</button>
@@ -106,206 +219,144 @@
       <button class="btn best-buy" id="bestBuy" title="Buy one affordable building with the highest base production per amaan">⚡ Buy best value · ×1</button><div class="list" id="L2"></div>
     </section>
 
-    <!-- UPGRADES -->
     <section class="panel" id="p-upg" role="tabpanel">
-      <div class="panel-head">
-        <h2>Available upgrades</h2>
-        <span class="hint" id="upgCount"></span>
-      </div>
+      <div class="panel-head"><h2>Available upgrades</h2><span class="hint" id="upgCount"></span></div>
       <div class="ugrid" id="L3"></div>
-      <div class="empty" id="upgEmpty" hidden>
-        <b>Nothing to buy right now.</b>
-        <span>Own more buildings or earn more amaans to reveal new upgrades. Each building unlocks a tier upgrade at 1, 5, 25, 50, 100, 150, 200, 250 and 300 owned.</span>
-      </div>
-      <details class="bought">
-        <summary>Purchased upgrades (<span id="boughtN">0</span>)</summary>
-        <div class="ugrid small" id="L3b"></div>
-      </details>
+      <div class="empty" id="upgEmpty" hidden><b>Nothing to buy right now.</b><span>Own more buildings or earn more amaans to reveal new upgrades.</span></div>
+      <details class="bought"><summary>Purchased upgrades (<span id="boughtN">0</span>)</summary><div class="ugrid small" id="L3b"></div></details>
     </section>
 
-    <!-- REBIRTH -->
     <section class="panel" id="p-rebirth" role="tabpanel">
       <div class="prestige-card stars">
         <div class="pc-ico"><svg class="ico big" aria-hidden="true"><use href="#i-star"/></svg></div>
         <div class="pc-body">
           <h2>Rebirth</h2>
-          <p>Start the school year over. You lose amaans, buildings and upgrades, but you keep your <b>Gold Stars</b>, your trophies and everything in the Sticker Book. Each Gold Star permanently boosts production by <b id="starRate">+10%</b>.</p>
-          <div class="pc-stats">
-            <div><small>Gold Stars</small><b id="starsUnspent">0</b></div>
-            <div><small>Earned this cycle</small><b id="starsTot">0</b></div>
-            <div><small>Production bonus</small><b id="starBonus">×1.00</b></div>
-            <div><small>Next star at</small><b id="nextStar">1.00 M</b></div>
-          </div>
+          <p>Start the school year over. You lose amaans, buildings and upgrades, but you keep your <b>Gold Stars</b>, your trophies and everything in the Sticker Book.</p>
+          <div class="pc-stats"><div><small>Gold Stars</small><b id="starsUnspent">0</b></div><div><small>Earned this cycle</small><b id="starsTot">0</b></div><div><small>Production bonus</small><b id="starBonus">×1.00</b></div><div><small>Next star at</small><b id="nextStar">1.00 M</b></div></div>
           <button class="big-btn" id="rebirthBtn" disabled>Rebirth for <b>+0</b> Gold Stars</button>
-          <p class="hint">Gold Stars earned = √(amaans earned this cycle ÷ 1,000,000), times your star multipliers. Earning is cumulative, so rebirthing early or late gives the same total.</p>
+          <p class="hint">Gold Stars are earned from big amaan totals and help your long-term growth.</p>
         </div>
       </div>
-
-      <div class="panel-head"><h2>Sticker Book</h2><span class="hint">Spend Gold Stars. Spending does not reduce your production bonus.</span></div>
+      <div class="panel-head"><h2>Sticker Book</h2><span class="hint">Spend Gold Stars.</span></div>
       <div class="ugrid" id="L4"></div>
     </section>
 
-    <!-- PRESTIGE -->
     <section class="panel" id="p-prestige" role="tabpanel">
       <div class="prestige-card diplomas" id="gradCard">
         <div class="pc-ico"><svg class="ico big" aria-hidden="true"><use href="#i-diploma"/></svg></div>
         <div class="pc-body">
           <h2>Graduation</h2>
-          <p>Leave the school entirely. Resets everything a Rebirth resets <b>plus</b> your Gold Stars and Sticker Book. In exchange you earn <b>Diplomas</b>: each one gives <b>+50% production</b> and <b>+50% Gold Stars</b> forever.</p>
-          <div class="pc-stats">
-            <div><small>Diplomas</small><b id="dipUnspent">0</b></div>
-            <div><small>Earned this cycle</small><b id="dipTot">0</b></div>
-            <div><small>Stars since graduation</small><b id="starsEver">0</b></div>
-            <div><small>Next diploma at</small><b id="nextDip">300 stars</b></div>
-          </div>
-          <div class="locked" id="gradLock"><svg class="ico" aria-hidden="true"><use href="#i-lock"/></svg> Buy <b>Hall Pass</b> in the Sticker Book to unlock Graduation.</div>
+          <p>Leave the school entirely. Resets everything a Rebirth would, but gives you <b>Diplomas</b>.</p>
+          <div class="pc-stats"><div><small>Diplomas</small><b id="dipUnspent">0</b></div><div><small>Earned this cycle</small><b id="dipTot">0</b></div><div><small>Gold Stars all-time</small><b id="starsEver">0</b></div><div><small>Next diploma at</small><b id="nextDip">300 stars</b></div></div>
           <button class="big-btn" id="gradBtn" disabled hidden>Graduate for <b>+0</b> Diplomas</button>
-          <p class="hint">Diplomas = √(Gold Stars earned since last Graduation ÷ 300), times your diploma multipliers.</p>
         </div>
       </div>
-
-      <div class="panel-head"><h2>Trophy Cabinet</h2><span class="hint">Spend Diplomas on powerful permanent perks.</span></div>
+      <div class="panel-head"><h2>Trophy Cabinet</h2><span class="hint">Spend Diplomas.</span></div>
       <div class="ugrid" id="L5"></div>
-
-      <div class="prestige-card halos" id="transCard">
-        <div class="pc-ico"><svg class="ico big" aria-hidden="true"><use href="#i-halo"/></svg></div>
-        <div class="pc-body">
-          <h2>Transcendence</h2>
-          <p>Amaan becomes a legend. Resets <b>everything</b>, including Diplomas and the Trophy Cabinet. Each <b>Halo</b> adds <b>+100% production</b>, <b>+20% Gold Stars</b> and <b>+10% Diplomas</b> to its base bonus. The base Halo bonus remains linear. Combined prestige bonuses have diminishing returns, and later Halos cost more.</p>
-          <div class="pc-stats">
-            <div><small>Halos</small><b id="haloN">0</b></div>
-            <div><small>Diplomas ever earned</small><b id="dipAll">0</b></div>
-            <div><small>Next halo at</small><b id="nextHalo">25 diplomas</b></div>
-            <div><small>Transcendences</small><b id="transN">0</b></div>
-          </div>
-          <div class="locked" id="transLock"><svg class="ico" aria-hidden="true"><use href="#i-lock"/></svg> Buy <b>Legacy Tie</b> in the Trophy Cabinet to unlock Transcendence.</div>
-          <button class="big-btn" id="transBtn" disabled hidden>Transcend for <b>+0</b> Halos</button>
-        </div>
-      </div>
-      <div class="activity-card"><b>Balanced Halo scaling</b><p class="hint">H Halos give production ×(1 + H), stars ×(1 + 0.2H), diplomas ×(1 + 0.1H) before softcaps.<br>Halo thresholds: 25, 100, 225, 400… cumulative diplomas (25 × H²). Existing saves keep earned Halos and use an adjusted threshold.</p></div><div class="panel-head"><h2>Halo milestones</h2></div>
-      <div class="milestones" id="L6"></div>
     </section>
 
-    <!-- CHALLENGES -->
     <section class="panel" id="p-chal" role="tabpanel">
-      <div class="panel-head"><h2>Challenges</h2><span class="hint">Each challenge starts a Rebirth under a special rule. Reach the goal to earn a permanent reward. Can be completed 5 times, with bigger goals each time.</span></div>
-      <div class="locked" id="chalLock"><svg class="ico" aria-hidden="true"><use href="#i-lock"/></svg> Buy <b>Teacher's Lounge</b> in the Sticker Book to unlock Challenges.</div>
-      <div class="active-chal" id="chalActive" hidden></div>
+      <div class="panel-head"><h2>Challenges</h2><span class="hint">Challenges and prestige rules.</span></div>
       <div class="list" id="L7"></div>
     </section>
 
     <section class="panel" id="p-activities" role="tabpanel">
       <div class="panel-head"><h2>Extra credit</h2><span class="new-tag">NEW</span></div>
-      <p class="hint">A little more Amaan. Your original progression, with something extra to work towards.</p>
-      <div class="activity-card streak-card"><b>🎁 Daily login streak</b><p class="hint">Claim once per day. Rewards grow until day 7. Miss a day and the streak restarts. Day 3 unlocks Gold Frame; day 7 unlocks Prism.</p>
-      <div class="streak-dots" id="streakDots"></div><div class="sprint-stats"><div><strong id="streakNow">0</strong><small>Current streak</small></div><div><strong id="streakBest">0</strong><small>Best streak</small></div></div><button class="big-btn" id="claimDaily">Claim</button></div>
-      <div class="panel-head"><h2>Daily homework</h2></div>
-      <p class="hint">Resets at midnight UTC. Fixed amaan rewards, once per quest per day. Reward claims are paused during prestige challenges.</p>
-      <div id="dailyList"></div>
-      <div class="panel-head"><h2>30-second click sprint</h2></div>
-      <div class="activity-card"><b>Beat your personal best.</b><p class="hint">Start the timer, then click Amaan or press Space away from a focused button. Normal click earnings continue; the sprint is just for bragging rights.</p>
-      <div class="sprint-stats"><div><strong id="sprintTime">30s</strong><small>Remaining</small></div><div><strong id="sprintCount">0</strong><small>Clicks</small></div><div><strong id="sprintBest">0</strong><small>Personal best</small></div></div>
-      <button class="big-btn" id="startSprint">Start sprint</button></div>
-      <div class="panel-head"><h2>Milestone quests</h2></div><p class="hint">One-time goals across your whole save, with amaans, Gold Stars and cosmetics as rewards.</p><div id="mqList"></div>
-      <div class="panel-head"><h2>Memory mini-game</h2></div>
-      <div class="activity-card"><b>🧠 Blazer Badge Memory</b><p class="hint">Watch the pads flash, then repeat the pattern. Each round adds one flash. Reach 5 for a daily production prize; 8 is a perfect run.</p><div class="mem-pads" id="memPads"></div><p class="mem-msg" id="memMsg">Press start when ready.</p><div class="sprint-stats"><div><strong id="memBest">0</strong><small>Best</small></div><div><strong id="memDaily">Available</strong><small>Daily prize</small></div></div><button class="big-btn" id="memStart">Start memory game</button></div>
+      <p class="hint">A little more Amaan. Your original progression, with harmless mini-games added.</p>
+
+      <div class="mini-game-card">
+        <div class="mini-game-row">
+          <b>👅 Tongue Flick</b>
+          <div class="mini-game-stats"><span>Score: <strong id="tongueScore">0</strong></span><span>Best: <strong id="tongueBest">0</strong></span></div>
+        </div>
+        <div class="mini-game-box" id="tongueBox">
+          <div class="mini-game-target" id="tongueTarget" style="left:50%;top:50%;">👅</div>
+        </div>
+        <div class="mini-game-row">
+          <button class="btn primary" id="startTongue">Start</button>
+          <span class="mini-game-msg" id="tongueMsg">Tap the tongue as fast as you can.</span>
+        </div>
+      </div>
+
+      <div class="mini-game-card">
+        <div class="mini-game-row">
+          <b>🏁 Amaan Race</b>
+          <div class="mini-game-stats"><span>Correct: <strong id="raceCorrect">0</strong></span></div>
+        </div>
+        <div class="mini-game-box" id="raceBox">
+          <div class="mini-game-racer blue" id="raceBlue" style="left:20px;">🟦</div>
+          <div class="mini-game-racer red" id="raceRed" style="left:20px;">🟥</div>
+          <div style="position:absolute;left:0;right:0;bottom:55px;height:2px;background:rgba(255,255,255,0.2);"></div>
+        </div>
+        <div class="mini-game-choices">
+          <button class="btn" id="pickBlue">Blue</button>
+          <button class="btn" id="pickRed">Red</button>
+        </div>
+        <div class="mini-game-row">
+          <button class="btn primary" id="startRace">Start race</button>
+          <span class="mini-game-msg" id="raceMsg">Pick a winner and cheer them on.</span>
+        </div>
+      </div>
+
+      <div class="mini-game-card">
+        <div class="mini-game-row">
+          <b>💨 Amaan Dodge</b>
+          <div class="mini-game-stats"><span>Time: <strong id="dodgeScore">0</strong>s</span><span>Best: <strong id="dodgeBest">0</strong>s</span></div>
+        </div>
+        <div class="mini-game-box" id="dodgeBox">
+          <div class="mini-game-dodge-player" id="dodgePlayer">🙂</div>
+        </div>
+        <div class="mini-game-row">
+          <button class="btn primary" id="startDodge">Start</button>
+          <button class="btn" id="dodgeLeft">◀</button>
+          <button class="btn" id="dodgeRight">▶</button>
+          <span class="mini-game-msg" id="dodgeMsg">Avoid the falling blocks.</span>
+        </div>
+      </div>
     </section>
+
     <section class="panel" id="p-style" role="tabpanel">
-      <div class="panel-head"><h2>Prestige rank</h2></div><div class="activity-card"><strong class="rank-big" id="rankBig"></strong><p class="hint">Your rank is cosmetic and follows your best prestige achievement.</p><div class="rank-ladder" id="rankLadder"></div></div>
+      <div class="panel-head"><h2>Prestige rank</h2></div><div class="activity-card"><strong class="rank-big" id="rankBig"></strong><p class="hint">Your rank is cosmetic.</p><div class="rank-ladder" id="rankLadder"></div></div>
       <div class="panel-head"><h2>Amaan looks</h2><span class="hint">Locked looks show how to earn them.</span></div><div class="cos-grid" id="skinList"></div>
-      <div class="panel-head"><h2>Stage backgrounds</h2></div><div class="cos-grid" id="bgList"></div>
-      <div class="panel-head"><h2>The Legend of Amaan</h2></div><p class="hint">Story chapters unlock from all-time amaans. Some secrets are found elsewhere.</p><div class="lore-list" id="loreList"></div>
     </section>
+
     <section class="panel" id="p-minions" role="tabpanel">
       <div class="panel-head"><h2>Hire Amaans</h2><span class="new-tag">BIG FEATURE</span></div>
-      <div class="activity-card" id="minionLocked"><b>👥 Build a team of different Amaans</b><p class="hint">Complete your first Rebirth to open Hire Amaans. Every hired Amaan, Hire Token and agency upgrade survives all prestige resets.</p><button class="big-btn" id="foundMinions" disabled>Rebirth once to unlock</button></div>
-      <div id="minionOpen" hidden>
-        <div class="minion-hero"><div><span class="crew-mark">◆</span><div><small>Hire Tokens</small><strong id="minionTokens">0</strong></div></div><div><small>All-time tokens</small><b id="minionEarned">0</b></div><div><small>Work shifts</small><b id="minionCycles">0</b></div><div><small>Agency rank</small><b id="minionRank">◇ Trainee</b></div></div>
-        <div class="diversity-note"><b>Appearance and heritage are cosmetic.</b><span>Power, Speed and Efficiency come only from job and level, so no race or heritage receives better stats.</span></div>
-
-        <div class="panel-head"><h2>Automatic Amaan shift</h2><span class="hint">Your active team works continuously—there is no dungeon or adventure mode.</span></div>
-        <div class="shift-card"><div><small>NEXT PAYDAY</small><strong id="shiftStatus">Assign 3 Amaans</strong></div><div class="shift-rewards"><span><b id="shiftYield">—</b><small>Hire Tokens</small></span><span><b id="shiftXp">—</b><small>XP each</small></span></div><div class="shift-bar"><i id="shiftBar"></i></div><p class="hint">A base shift lasts 10 minutes. Speed shortens it and Efficiency improves rewards. Amaans work offline for up to 8 hours.</p></div>
-
-        <div class="panel-head"><h2>Active Amaan team</h2><span class="hint">Choose 3. Job synergies boost matching buildings.</span></div><div class="team-slots" id="teamSlots"></div><div class="team-totals"><span>⚔ Power <b id="teamPower">0</b></span><span>⚡ Speed <b id="teamSpeed">0</b></span><span>◆ Efficiency <b id="teamEff">0</b></span><span>📈 Team production <b id="teamProd">+0%</b></span></div>
-
-        <div class="panel-head"><h2>Hire Amaans Completion</h2><span class="hint">The long-term goal</span></div><div class="mastery-card"><div><b>Hire all 8 Amaan types</b><strong id="typeProgress">0 / 8</strong></div><div><b>Collect all 6 jobs</b><strong id="jobProgress">0 / 6</strong></div><div><b>Train 3 Amaans to level 30</b><strong id="veteranProgress">0 / 3</strong></div><div class="mastery-bar"><i id="masteryBar"></i></div><div class="amaan-type-list" id="amaanTypeList"></div><p class="hint">Completion awards the permanent Head Hirer title and <b>+25% global production</b>.</p><div class="mastery-done" id="masteryDone" hidden>👑 HIRE AMAANS COMPLETE</div></div>
-
-        <div class="panel-head"><h2>Your hired Amaans</h2><span class="hint"><b id="minionRosterCount">0 / 10</b> hired</span></div><p class="hint">XP automatically raises levels to 30. Manual Training buys one level immediately. Optional Auto Training buys one affordable level after each shift.</p><div class="minion-grid" id="minionRoster"></div>
-
-        <div class="panel-head"><h2>Hire a new Amaan</h2><span class="hint">Next hire: <b id="minionRecruitCost">10</b> ◆ · Capacity <b id="minionCapacity">10</b></span></div>
-        <div class="hire-builder"><label><span>Amaan type / heritage</span><select id="hireHeritage"></select></label><label><span>Job</span><select id="hireJob"></select></label><div class="hire-preview" id="hirePreview"></div><button class="big-btn" id="hireAmaanBtn">Hire this Amaan</button></div>
-
-        <div class="panel-head"><h2>Hire Amaans upgrades</h2><span class="hint">Permanent and capped. Production bonuses pause during Challenges.</span></div><div class="ugrid" id="minionPerks"></div>
-        <details class="minion-help"><summary>How Hire Amaans works</summary><ul><li>Choose any of 8 diverse Amaan appearances and any of 6 jobs—48 possible combinations.</li><li>Heritage changes only the portrait. Job and level determine every stat and bonus.</li><li>Power strengthens job-building synergy; Speed shortens shifts; Efficiency improves XP and Hire Token pay.</li><li>Levels 10 and 20 unlock silver and gold uniforms.</li><li>Job-building synergies are now capped at +100%; active-team Power also provides up to +150% global production. Agency Banner gives +5% and Click Coach gives +8% per level.</li><li>Hired Amaans work offline for up to 8 hours and survive every prestige reset.</li></ul></details>
-        <div class="panel-head"><h2>Hiring log</h2></div><ol class="minion-log" id="minionLog"></ol>
-      </div>
+      <div class="activity-card"><b>👥 Build a team of different Amaans</b><p class="hint">This section is still available later.</p></div>
     </section>
 
     <section class="panel" id="p-pets" role="tabpanel">
       <div class="panel-head"><h2>Pet Amaans</h2><span class="new-tag">NEW</span></div>
-      <div class="activity-card pet-lock-card" id="petLocked"><b>🥚 The Amaan Egg is dormant</b><p>Earn <b>3 Halos</b> to unlock eggs and your first pet slot.</p><div class="pet-lock-progress"><span>Current Halos: <b id="petHaloNow">0</b></span><span>Still needed: <b id="petHaloNeed">3</b></span></div><p class="hint">Pet XP unlocks later at 5 Halos. Everything in this system survives Transcendence.</p></div>
-      <div id="petOpen" hidden>
-        <div class="pet-hero"><div><span>🥚</span><div><small>Egg Sanctuary</small><strong id="petHatches">0</strong><small>eggs opened</small></div></div><div><small>Hire Tokens</small><b id="petHireTokens">0</b></div><div><small>Collection</small><b id="petFound">0 / 5</b></div><div><small>Equipped slots</small><b id="petSlotCount">0 / 1</b></div></div>
-        <div class="locked" id="petXpLock">🔒 Reach <b>5 Halos</b> to earn Pet XP from Hire Amaans shifts, every 100 manual clicks and feeding. Pets still provide their level-1 boost before then.</div>
-
-        <div class="egg-card"><div class="big-egg">🥚</div><div><h2>Open an Amaan Egg</h2><p>Costs <b>25 Hire Tokens</b>. Duplicates are stored for Breed/Fuse upgrades.</p><div class="egg-odds"><span class="o-common">Tiny Amaan · 50%</span><span class="o-uncommon">Tongue Amaan · 30%</span><span class="o-rare">Worker Amaan · 15%</span><span class="o-legend">Halo Amaan · 4.9%</span><span class="o-mythic">Amaan Dih · 0.1%</span></div></div><button class="big-btn" id="hatchPetBtn">Open egg · 25 ◆</button></div>
-
-        <div class="panel-head"><h2>Equipped pets</h2><span class="hint">1 slot at 3 Halos · 2 at 5 · 3 at 10</span></div><div class="pet-slots" id="petActiveSlots"></div>
-        <div class="panel-head"><h2>Pet collection</h2><span class="hint">Boosts increase every level and at evolutions 10, 25 and 50.</span></div><div class="pet-grid" id="petCollection"></div>
-
-        <details class="pet-help"><summary>How Pet Amaans work</summary><ul><li>Egg odds are exactly 50%, 30%, 15%, 4.9% and 0.1% per hatch.</li><li>Amaan Dih is the Mythic 0.1% pet.</li><li>At 5 Halos, equipped pets earn XP from completed Hire Amaans shifts and every 100 manual clicks.</li><li>Feed a pet with amaans for 50 XP. Feed cost scales with its level and your production.</li><li>Two duplicate copies can be Breed/Fused into a Bond Star, making that pet's boost 15% stronger. Maximum 5 stars.</li><li>Each pet has a cooldown ability. It must be equipped to activate it.</li><li>Pets, levels, duplicates, Bond Stars, cooldowns and equipped slots all survive Transcendence.</li></ul></details>
-      </div>
+      <div class="activity-card"><b>🥚 Pets are part of the future</b><p>They are intentionally not in this edit yet.</p></div>
     </section>
 
-    <section class="panel" id="p-essence" role="tabpanel"><div class="panel-head"><h2>Essence Lab</h2><span class="new-tag">NEW</span></div>
-      <div class="activity-card"><b>◆ A slower kind of power</b><p class="hint">After your first Halo, earn 1 Essence per 5 minutes of active play. Click at least once each minute to keep the meter running. No offline Essence, no earnings during challenges, maximum 20 per local calendar day. Partial progress carries over.</p><div class="sprint-stats"><div><strong id="essBalance">0</strong><small>Available</small></div><div><strong id="essEarned">0</strong><small>All-time</small></div><div><strong id="essDaily">0 / 20</strong><small>Earned today</small></div></div><progress id="essProgress" max="300" value="0" style="width:100%;accent-color:var(--purple)"></progress><p class="hint">Essence and all Lab upgrades survive Rebirth, Graduation and Transcendence. Upgrade costs double with each level, and every upgrade has a maximum level.</p></div>
-      <div class="locked" id="essLock">🔒 Earn your first Halo to unlock the Lab.</div><div class="ugrid" id="essList"></div>
-      <div class="activity-card"><b>Balance update</b><p class="hint">Gold Star production softcaps at ×100; Diploma production at ×25. Above each threshold, further growth uses a 0.35 power. Combined global bonuses softcap at ×1,000. Gold Star earning multipliers softcap at ×10 and Diploma earning at ×5. Output above 1e30 per click or second also has diminishing returns. Click Frenzy is ×25, and the 8/13-Halo milestone boosts are +25% each. Currency totals are capped at 1e100 to prevent numeric overflow. Your earned currencies are retained unless above that safety ceiling.</p></div>
+    <section class="panel" id="p-essence" role="tabpanel">
+      <div class="panel-head"><h2>Essence Lab</h2><span class="new-tag">NEW</span></div>
+      <div class="activity-card"><b>◆ Essence Lab is still being built</b><p class="hint">The current patch only adds the mini-games.</p></div>
     </section>
-    <!-- ACHIEVEMENTS -->
+
     <section class="panel" id="p-ach" role="tabpanel">
       <div class="panel-head"><h2>Trophies</h2><span class="hint" id="achCount"></span></div>
-      <p class="hint">Every trophy adds <b>+1%</b> to the base trophy multiplier, before combined softcaps. Hover or tap one to see how to earn it.</p>
       <div id="L8"></div>
     </section>
 
-    <!-- STATS -->
     <section class="panel" id="p-stats" role="tabpanel">
       <div class="panel-head"><h2>Statistics</h2></div>
       <div class="statgrid" id="L9"></div>
     </section>
 
-    <!-- SETTINGS -->
     <section class="panel" id="p-set" role="tabpanel">
       <div class="panel-head"><h2>Settings</h2></div>
       <div class="settings">
-        <label class="row"><span>Theme</span>
-          <select id="setTheme"><option value="auto">System</option><option value="light">Light</option><option value="dark">Dark</option></select>
-        </label>
+        <label class="row"><span>Theme</span><select id="setTheme"><option value="auto">System</option><option value="light">Light</option><option value="dark">Dark</option></select></label>
         <label class="row"><span>Sound effects</span><input type="checkbox" id="setSound" checked></label>
         <label class="row"><span>Click particles</span><input type="checkbox" id="setFx" checked></label>
-        <label class="row"><span>Number format</span>
-          <select id="setNum"><option value="short">Short (1.23 M)</option><option value="sci">Scientific (1.23e6)</option></select>
-        </label>
-        <label class="row" id="rowAuto" hidden><span>Autopilot (auto-buy buildings)</span><input type="checkbox" id="setAuto" checked></label>
-        <label class="row" id="rowAutoU" hidden><span>Auto-Upgrades</span><input type="checkbox" id="setAutoU" checked></label>
       </div>
-      <div class="panel-head"><h2>Save</h2></div>
-      <p class="hint">Your game saves automatically every few seconds in this browser. Export a save code to move it to another device.</p>
-      <div class="btnrow">
-        <button class="btn" id="btnSave">Save now</button>
-        <button class="btn" id="btnExport">Export save</button>
-        <button class="btn" id="btnImport">Import save</button>
-        <button class="btn danger" id="btnWipe">Wipe everything</button>
-      </div>
-      <textarea id="saveBox" rows="4" placeholder="Save code appears here, or paste one and press Import." spellcheck="false"></textarea>
-      <p class="hint" id="saveMsg"></p>
     </section>
   </main>
 </div>
 
 <div class="toasts" id="toasts" aria-live="polite"></div>
-
 <div class="modal" id="modal" hidden>
   <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="mTitle">
     <h2 id="mTitle">Title</h2>
@@ -313,6 +364,195 @@
     <div class="btnrow" id="mBtns"></div>
   </div>
 </div>
+
+<script>
+  (function () {
+    const tongueBox = document.getElementById('tongueBox');
+    const tongueTarget = document.getElementById('tongueTarget');
+    const tongueMsg = document.getElementById('tongueMsg');
+    const tongueScoreEl = document.getElementById('tongueScore');
+    const tongueBestEl = document.getElementById('tongueBest');
+    const raceBlue = document.getElementById('raceBlue');
+    const raceRed = document.getElementById('raceRed');
+    const raceMsg = document.getElementById('raceMsg');
+    const raceCorrectEl = document.getElementById('raceCorrect');
+    const dodgeBox = document.getElementById('dodgeBox');
+    const dodgePlayer = document.getElementById('dodgePlayer');
+    const dodgeMsg = document.getElementById('dodgeMsg');
+    const dodgeScoreEl = document.getElementById('dodgeScore');
+    const dodgeBestEl = document.getElementById('dodgeBest');
+
+    let tongueScore = 0;
+    let tongueBest = 0;
+    let tongueTimer = null;
+
+    function moveTongueTarget() {
+      if (!tongueBox || !tongueTarget) return;
+      const maxX = Math.max(0, tongueBox.clientWidth - 52);
+      const maxY = Math.max(0, tongueBox.clientHeight - 52);
+      tongueTarget.style.left = Math.random() * maxX + 'px';
+      tongueTarget.style.top = Math.random() * maxY + 'px';
+    }
+
+    document.getElementById('startTongue').addEventListener('click', function () {
+      clearInterval(tongueTimer);
+      tongueScore = 0;
+      tongueScoreEl.textContent = '0';
+      tongueMsg.textContent = 'Go! Tap the tongue!';
+      moveTongueTarget();
+
+      tongueTarget.onclick = function () {
+        tongueScore += 1;
+        tongueScoreEl.textContent = String(tongueScore);
+        tongueBest = Math.max(tongueBest, tongueScore);
+        tongueBestEl.textContent = String(tongueBest);
+        moveTongueTarget();
+      };
+
+      let timeLeft = 4;
+      tongueTimer = setInterval(function () {
+        timeLeft -= 0.25;
+        if (timeLeft <= 0) {
+          clearInterval(tongueTimer);
+          tongueMsg.textContent = 'Time up! Nice flicking.';
+          tongueTarget.onclick = null;
+        }
+      }, 250);
+    });
+
+    let raceCorrect = 0;
+    let selectedWinner = 'blue';
+    let raceActive = false;
+
+    function resetRaceTrack() {
+      if (raceBlue) raceBlue.style.left = '20px';
+      if (raceRed) raceRed.style.left = '20px';
+    }
+
+    document.getElementById('pickBlue').addEventListener('click', function () {
+      if (raceActive) return;
+      selectedWinner = 'blue';
+      raceMsg.textContent = 'Blue selected. Start the race!';
+    });
+
+    document.getElementById('pickRed').addEventListener('click', function () {
+      if (raceActive) return;
+      selectedWinner = 'red';
+      raceMsg.textContent = 'Red selected. Start the race!';
+    });
+
+    document.getElementById('startRace').addEventListener('click', function () {
+      if (raceActive) return;
+      raceActive = true;
+      resetRaceTrack();
+      const raceBox = document.getElementById('raceBox');
+      let bluePos = 20;
+      let redPos = 20;
+      const finish = Math.max(0, (raceBox.clientWidth || 300) - 60);
+      const tick = setInterval(function () {
+        bluePos += Math.random() * 9 + 5;
+        redPos += Math.random() * 9 + 5;
+        raceBlue.style.left = bluePos + 'px';
+        raceRed.style.left = redPos + 'px';
+
+        if (bluePos >= finish || redPos >= finish) {
+          clearInterval(tick);
+          raceActive = false;
+          const winner = bluePos >= redPos ? 'blue' : 'red';
+          if (winner === selectedWinner) {
+            raceCorrect += 1;
+            raceCorrectEl.textContent = String(raceCorrect);
+            raceMsg.textContent = 'You picked the winner! Nice.';
+          } else {
+            raceMsg.textContent = 'Not this time. Try again.';
+          }
+          resetRaceTrack();
+        }
+      }, 120);
+    });
+
+    let dodgeScore = 0;
+    let dodgeBest = 0;
+    let dodgeTimer = null;
+    let dodgeActive = false;
+    let dodgePlayerLeft = 50;
+    const dodgeObstacles = [];
+
+    function setDodgePlayerPosition() {
+      if (!dodgePlayer) return;
+      dodgePlayer.style.left = dodgePlayerLeft + '%';
+    }
+
+    function moveDodge(direction) {
+      if (!dodgeActive) return;
+      if (direction === 'left') dodgePlayerLeft = Math.max(8, dodgePlayerLeft - 8);
+      if (direction === 'right') dodgePlayerLeft = Math.min(92, dodgePlayerLeft + 8);
+      setDodgePlayerPosition();
+    }
+
+    document.getElementById('dodgeLeft').addEventListener('click', function () { moveDodge('left'); });
+    document.getElementById('dodgeRight').addEventListener('click', function () { moveDodge('right'); });
+    document.addEventListener('keydown', function (event) {
+      if (!dodgeActive) return;
+      if (event.key === 'ArrowLeft' || event.key.toLowerCase() === 'a') moveDodge('left');
+      if (event.key === 'ArrowRight' || event.key.toLowerCase() === 'd') moveDodge('right');
+    });
+
+    document.getElementById('startDodge').addEventListener('click', function () {
+      if (dodgeTimer) clearInterval(dodgeTimer);
+      dodgeActive = true;
+      dodgeScore = 0;
+      dodgeScoreEl.textContent = '0';
+      dodgeMsg.textContent = 'Avoid the falling blocks!';
+      dodgePlayerLeft = 50;
+      setDodgePlayerPosition();
+      dodgeObstacles.length = 0;
+      dodgeBox.querySelectorAll('.mini-game-dodge-obstacle').forEach(function (ob) { ob.remove(); });
+
+      dodgeTimer = setInterval(function () {
+        if (!dodgeActive) return;
+        dodgeScore += 1;
+        dodgeScoreEl.textContent = String(Math.floor(dodgeScore / 10));
+
+        if (Math.random() < 0.32) {
+          const obstacle = document.createElement('div');
+          obstacle.className = 'mini-game-dodge-obstacle';
+          obstacle.textContent = '💥';
+          obstacle.style.left = (Math.random() * Math.max(0, dodgeBox.clientWidth - 22)) + 'px';
+          obstacle.style.top = '0px';
+          dodgeBox.appendChild(obstacle);
+          dodgeObstacles.push(obstacle);
+        }
+
+        for (let i = 0; i < dodgeObstacles.length; i++) {
+          const obstacle = dodgeObstacles[i];
+          let top = parseFloat(obstacle.style.top || '0');
+          top += 4;
+          obstacle.style.top = top + 'px';
+
+          const playerCenter = dodgePlayerLeft * dodgeBox.clientWidth / 100;
+          const obstacleCenter = (parseFloat(obstacle.style.left || '0') + 11);
+          const colliding = top > dodgeBox.clientHeight - 58 && Math.abs(playerCenter - obstacleCenter) < 22;
+
+          if (colliding) {
+            dodgeBest = Math.max(dodgeBest, Math.floor(dodgeScore / 10));
+            dodgeBestEl.textContent = String(dodgeBest);
+            dodgeMsg.textContent = 'You got clipped! Try again.';
+            clearInterval(dodgeTimer);
+            dodgeActive = false;
+            break;
+          }
+
+          if (top > dodgeBox.clientHeight + 20) {
+            obstacle.remove();
+            dodgeObstacles.splice(i, 1);
+            i--;
+          }
+        }
+      }, 100);
+    });
+  })();
+</script>
 
 <script src="js/game.js"></script>
 </body>
